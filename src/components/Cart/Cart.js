@@ -5,7 +5,7 @@ const Cart = (props) => {
     const cart = props.cart
     let total = 0;
     cart.map(product => {
-        return total = total + product.price
+        return total = total + product.price * product.quantity;
     })
     const numberFixed = (num) => {
         return num.toFixed(2)
@@ -13,15 +13,12 @@ const Cart = (props) => {
     let shipping = 0;
     if(total > 35 ){
         shipping = 0;
-        console.log(shipping);
     }
     else if(total > 15 ){
         shipping = 4.99;
-        console.log(shipping);
     }
     else if(total > 0){
         shipping = 12.99;
-        console.log(shipping);
     }
     const tax = total / 10;
     return (
@@ -32,6 +29,7 @@ const Cart = (props) => {
             <h4>Total before tax: ${numberFixed(total + shipping)}</h4>
             <h4>Tax(10%): ${numberFixed(tax)}</h4>
             <h3>Order Total: ${numberFixed(total + tax)}</h3>
+            {props.children}
         </div>
     );
 };

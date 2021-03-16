@@ -1,0 +1,7 @@
+.review-container{
+    display: flex;
+}
+.review-product{
+    width: 75%;
+    margin: 0 0.8rem 0 6rem;
+}
