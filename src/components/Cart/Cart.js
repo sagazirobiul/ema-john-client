@@ -5,7 +5,7 @@ const Cart = (props) => {
     const cart = props.cart
     let total = 0;
     cart.map(product => {
-        return total = total + product.price * product.quantity;
+        return total = total + product.price * product.quantity || 1;
     })
     const numberFixed = (num) => {
         return num.toFixed(2)
