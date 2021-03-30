@@ -22,7 +22,7 @@ const Review = () => {
         const saveCart = getDatabaseCart();
         const productKeys = Object.keys(saveCart)
 
-        fetch('http://localhost:5000/productsByKeys', {
+        fetch('https://polar-spire-94448.herokuapp.com/productsByKeys', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(productKeys)

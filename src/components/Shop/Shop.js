@@ -12,7 +12,8 @@ const Shop = () => {
     const [cart, setCart] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:5000/products').then(res => res.json()).then(data =>{
+        fetch('https://polar-spire-94448.herokuapp.com/products').then(res => res.json()).then(data =>{
+            console.log(data);
             setProducts(data)
         })
     }, [])
@@ -20,7 +21,7 @@ const Shop = () => {
     useEffect(() => {
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart)
-        fetch('http://localhost:5000/productsByKeys', {
+        fetch('https://polar-spire-94448.herokuapp.com/productsByKeys', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(productKeys)

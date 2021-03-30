@@ -6,7 +6,7 @@ const ProductDetail = () => {
     const {productKey} = useParams();
     const [product, setProduct] = useState({})
     useEffect(() => {
-        fetch('http://localhost:5000/products/'+productKey)
+        fetch('https://polar-spire-94448.herokuapp.com/products/'+productKey)
         .then(res => res.json())
         .then(data => setProduct(data))
     }, [productKey])
