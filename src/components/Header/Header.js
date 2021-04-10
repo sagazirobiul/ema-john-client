@@ -6,6 +6,7 @@ import "./Header.css";
 
 const Header = () => {
     const [,setLoggedInUser] = useContext(UserContext);
+    const clearSessionStorage = () => sessionStorage.clear();
     return (
         <div className="header">
             <img src={logo} alt="logo"/>
@@ -13,7 +14,7 @@ const Header = () => {
                 <Link to="/shop">Shop</Link>
                 <Link to="/review">Order Review</Link>
                 <Link to="/inventory">Manage Inventory</Link>
-                <button onClick={() => setLoggedInUser({})}>Sign Out</button>
+                <button onClick={() => {setLoggedInUser({}); clearSessionStorage()}}>Sign Out</button>
             </nav>
         </div>
     );

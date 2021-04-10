@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import firebase from "firebase/app";
+import "firebase/auth";
 import { useContext } from 'react';
 import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -23,17 +25,28 @@ function LogIn() {
   const location = useLocation();
   let { from } = location.state || { from: { pathname: "/" } };
 
+  const handleToken = () => {
+    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+      sessionStorage.setItem('token', idToken)
+    }).catch(function(error) {
+    })
+  }
+
   const googleSignIn = () => {
       handleGoogleSignIn()
       .then(res => {
+        setLoggedInUser(res);
         handleResponse(res, true);
+        handleToken();
       })
   }
 
   const fbSignIn = () => {
       handleFbSignIn()
       .then(res => {
+        setLoggedInUser(res);
         handleResponse(res, true);
+        handleToken();
       })
 
   }
@@ -48,6 +61,7 @@ function LogIn() {
   const handleResponse = (res, redirect) =>{
     setUser(res);
     setLoggedInUser(res);
+    handleToken();
     if(redirect){
         history.replace(from);
     }

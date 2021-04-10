@@ -10,13 +10,17 @@ import { Link } from 'react-router-dom';
 const Shop = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([])
+    const [search, setSearch] = useState('')
+
+    const handleSearch = event => setSearch(event.target.value);
 
     useEffect(() => {
-        fetch('https://polar-spire-94448.herokuapp.com/products').then(res => res.json()).then(data =>{
-            console.log(data);
+        fetch('http://localhost:5000/products?search='+search)
+        .then(res => res.json())
+        .then(data =>{
             setProducts(data)
         })
-    }, [])
+    }, [search])
 
     useEffect(() => {
         const savedCart = getDatabaseCart();
@@ -50,23 +54,26 @@ const Shop = () => {
         addToDatabaseCart(product.key, count)
     }
     return (
-        <div className="shop-container">
-            {products.length === 0 && <img src={spinner} alt=""/>}
-            <div className="product-container">
-                {
-                    products.map(product => <Product handleAddProduct={handleAddProduct} key={product.key} product={product}
-                    showAddToCart={true}
-                    ></Product>)
-                }
+        <>
+            <input type="search" onBlur={handleSearch} id=""/>
+            <div className="shop-container">
+                {products.length === 0 && <img src={spinner} alt=""/>}
+                <div className="product-container">
+                    {
+                        products.map(product => <Product handleAddProduct={handleAddProduct} key={product.key} product={product}
+                        showAddToCart={true}
+                        ></Product>)
+                    }
+                </div>
+                <div className="cart-container">
+                    <Cart cart={cart}>
+                        <Link to="/review">
+                            <button className="main-btn">Review Order</button>
+                        </Link>
+                    </Cart>
+                </div>
             </div>
-            <div className="cart-container">
-                <Cart cart={cart}>
-                    <Link to="/review">
-                        <button className="main-btn">Review Order</button>
-                    </Link>
-                </Cart>
-            </div>
-        </div>
+        </>
     );
 };
 
